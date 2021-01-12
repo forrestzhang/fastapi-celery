@@ -3,7 +3,7 @@ from time import sleep
 from celery import current_task
 
 from .celery_app import celery_app
-
+from subprocess import Popen, PIPE
 
 @celery_app.task(acks_late=True)
 def test_celery(word: str) -> str:
@@ -12,3 +12,8 @@ def test_celery(word: str) -> str:
         current_task.update_state(state='PROGRESS',
                                   meta={'process_percent': i*10})
     return f"test task return {word}"
+
+@celery_app.task()
+def test_bowite():
+
+    pass

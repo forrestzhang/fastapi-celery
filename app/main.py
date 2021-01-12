@@ -33,3 +33,15 @@ async def root(word: str, background_task: BackgroundTasks):
     background_task.add_task(background_on_message, task)
 
     return {"message": "Word received"}
+
+@app.get("/bowtie")
+async def bowtie(background_task: BackgroundTasks):
+    task_name = None
+
+    task_name = "app.app.worker.celery_worker.test_bowite"
+
+    task = celery_app.send_task(task_name)
+    print(task)
+    background_task.add_task(background_on_message, task)
+
+    return {"message": "bowtie sent"}
